@@ -1,0 +1,10 @@
+/target/
+/yaml/
+/yaml2/
+yaml
+yaml2
+/wndb/
+/wndb_compat/
+**/_*/
+**/_*
+#**/*.jar
