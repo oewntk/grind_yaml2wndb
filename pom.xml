@@ -11,6 +11,9 @@
 	<groupId>io.github.x-englishwordnet</groupId>
 	<artifactId>yaml2wndb</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	<name>yaml_to_sql</name>
+	<description>Read YAML Wordnet model and export it to WNDB files.</description>
+	<url>https://github.com/x-englishwordnet/grind_yaml2wndb</url>
 
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -21,17 +24,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.github.x-englishwordnet</groupId>
-			<artifactId>yaml</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>io.github.x-englishwordnet</groupId>
 			<artifactId>model</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.x-englishwordnet</groupId>
-			<artifactId>wndb</artifactId>
+			<artifactId>fromyaml</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.x-englishwordnet</groupId>
+			<artifactId>towndb</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -55,8 +58,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 
@@ -87,7 +90,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<source>8</source>
+					<source>11</source>
 				</configuration>
 			</plugin>
 

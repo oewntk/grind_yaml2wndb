@@ -1,11 +1,11 @@
 <p align="center">
-<img width="256" height="256" src="images/xewn2.png" alt="XEWN">
+<img width="256" height="256" src="images/oewntk.png" alt="XEWN">
 </p>
 <p align="center">
-<img width="198"src="images/mavencentral.png" alt="MavenCentral">
+<img width="150"src="images/mavencentral.png" alt="MavenCentral">
 </p>
 
-# Open English Wordnet YAML-to-WNDB grinder **[WORK IN PROGRESS]**
+# Open English Wordnet YAML-to-WNDB grinder
 
 This library reads from a model in YAML format and writes it to WNDB format.
 
@@ -13,13 +13,15 @@ Project [grind_yaml2wndb](https://github.com/x-englishwordnet/grind_yaml2wndb)
 
 See also [model](https://github.com/x-englishwordnet/model/blob/master/README.md).
 
-See also [yaml](https://github.com/x-englishwordnet/yaml/blob/master/README.md).
+See also [fromyaml](https://github.com/x-englishwordnet/fromyaml/blob/master/README.md).
 
-See also [wndb](https://github.com/x-englishwordnet/wndb/blob/master/README.md).
+See also [towndb](https://github.com/x-englishwordnet/towndb/blob/master/README.md).
 
 See also [x-englishwordnet](https://github.com/x-englishwordnet) and [globalwordnet/english-wordnet](https://github.com/globalwordnet/english-wordnet).
 
-![Dataflow1](images/dataflow5.png  "Dataflow")
+## Dataflow
+
+![Dataflow1](images/dataflow_yaml2wndb.png  "Dataflow")
 
 This library reads from the OEWN distribution YAML files and other YAML files that contain extra data.
 
@@ -27,7 +29,7 @@ This output conforms to the **WNDB(5WN)** format (and is to be found in the _wnd
 
 ## Command line
 
-`grind.sh [YAML] [YAML2]`
+`grind.sh [YAML] [YAML2] [WNDB]`
 
 grinds the WNDB database
 
@@ -41,6 +43,8 @@ partially grinds the WNDB database and output line at *offset* of *data.{noun|ve
 [YAML]    directory where OEWN distribution YAML files are
 
 [YAML2]  directory where extra YAML files are
+
+[WNDB]  directory where WNDB files are output
 
 [POS]      n|v|a|r
 
