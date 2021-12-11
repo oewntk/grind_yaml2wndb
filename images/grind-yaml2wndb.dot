@@ -1,9 +1,9 @@
 digraph "io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" { 
-	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:yaml:jar:1.0.0-SNAPSHOT:compile" ; 
 	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:model:jar:1.0.0-SNAPSHOT:compile" ; 
-	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:wndb:jar:1.0.0-SNAPSHOT:compile" ; 
-	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:parse:jar:1.0.1-SNAPSHOT:compile" ; 
+	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:fromyaml:jar:1.0.0-SNAPSHOT:compile" ; 
+	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:towndb:jar:1.0.0-SNAPSHOT:compile" ; 
+	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "io.github.x-englishwordnet:parse:jar:2.0.0-SNAPSHOT:compile" ; 
 	"io.github.x-englishwordnet:yaml2wndb:jar:1.0.0-SNAPSHOT" -> "junit:junit:jar:4.13.2:test" ; 
-	"io.github.x-englishwordnet:yaml:jar:1.0.0-SNAPSHOT:compile" -> "org.yaml:snakeyaml:jar:1.29:compile" ; 
+	"io.github.x-englishwordnet:fromyaml:jar:1.0.0-SNAPSHOT:compile" -> "org.yaml:snakeyaml:jar:1.29:compile" ; 
 	"junit:junit:jar:4.13.2:test" -> "org.hamcrest:hamcrest-core:jar:1.3:test" ; 
  } 
