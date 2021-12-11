@@ -1,5 +1,5 @@
 <p align="center">
-<img width="256" height="256" src="images/oewntk.png" alt="XEWN">
+<img width="256" height="256" src="images/oewntk.png" alt="OEWNTK">
 </p>
 <p align="center">
 <img width="150"src="images/mavencentral.png" alt="MavenCentral">
@@ -21,7 +21,7 @@ See also [x-englishwordnet](https://github.com/x-englishwordnet) and [globalword
 
 ## Dataflow
 
-![Dataflow1](images/dataflow_yaml2wndb.png  "Dataflow")
+![Dataflow](images/dataflow_yaml2wndb.png  "Dataflow")
 
 This library reads from the OEWN distribution YAML files and other YAML files that contain extra data.
 
