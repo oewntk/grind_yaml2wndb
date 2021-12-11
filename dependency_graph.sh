@@ -1,9 +1,10 @@
 #!/bin/bash
 
 graph=grind-yaml2wndb
+todir=images/
 
 mvn dependency:tree \
 -DoutputType=dot \
--DoutputFile=${graph}.dot
+-DoutputFile=${todir}${graph}.dot
 
-dot -Tpng -o "${graph}.png" "${graph}.dot"
+dot -Tpng -o "${todir}${graph}.png" "${todir}${graph}.dot"

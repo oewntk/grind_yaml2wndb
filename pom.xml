@@ -11,7 +11,7 @@
 	<groupId>io.github.x-englishwordnet</groupId>
 	<artifactId>yaml2wndb</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>yaml_to_sql</name>
+	<name>yaml_to_wndb</name>
 	<description>Read YAML Wordnet model and export it to WNDB files.</description>
 	<url>https://github.com/x-englishwordnet/grind_yaml2wndb</url>
 
