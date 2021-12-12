@@ -4,21 +4,16 @@
 
 package org.oewntk.grind.yaml2wndb;
 
-import org.oewntk.model.Lex;
+import org.oewntk.model.CoreModel;
 import org.oewntk.model.Model;
-import org.oewntk.model.Sense;
-import org.oewntk.model.Synset;
-import org.oewntk.wndb.out.DataGrinder;
-import org.oewntk.wndb.out.OffsetFactory;
+import org.oewntk.parse.DataParser1;
+import org.oewntk.pojos.ParsePojoException;
+import org.oewntk.wndb.out.LineProducer;
 import org.oewntk.yaml.in.Factory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import org.oewntk.parse.DataParser1;
-import org.oewntk.pojos.ParsePojoException;
+import java.util.function.BiFunction;
 
 /**
  * Main class that generates one line of the WN database in the WNDB format as per wndb(5WN)
@@ -31,57 +26,75 @@ public class Grinder1
 	/**
 	 * Main entry point
 	 *
-	 * @param args command-line arguments ([0] merged XML filename,[1] pos, [2] offset) # 1 input XML file # 2 SYNSETID | -sense | -offset # 3 SENSEID | POS
-	 *             (n|v|a|r|s) # 4 OFFSET (ie 1740)
+	 * @param args command-line arguments (
+	 *             [0] source,
+	 *             [1] synsetid
+	 *             [1] -offset [2] pos, [3] offset)
+	 *             [1] -sense [2] senseid
+	 *
+	 *             # POS (n|v|a|r|s)
+	 *             # OFFSET (ie 1740)
 	 * @throws IOException io
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		int[] flags = Grinder.flags(args);
+		int iArg = flags[1];
+
 		// Input
-		File inDir = new File(args[0]);
-		File inDir2 = new File(args[1]);
-		String extraArg1 = args[2];
-		boolean isOffset = extraArg1.equals("-offset");
-		boolean isSense = extraArg1.equals("-sense");
-		String extraArg2 = isOffset || isSense ? args[3] : null;
-		String extraArg3 = isOffset ? args[4] : null;
-
-		// Model
-		Model model = Factory.makeModel(inDir, inDir2);
-		System.err.printf("model %s\n%s%n", model, model.info());
-
-		// Compute synset offsets
-		Map<String, Long> offsets = new OffsetFactory(model.lexesByLemma, model.synsetsById, model.sensesById).compute();
+		File source = new File(args[iArg]);
 
 		// SynsetId, SenseId, w31 offset
-		String synsetId;
+		String extraArg1 = args[iArg + 1];
+		boolean isOffset = extraArg1.equals("-offset");
+		boolean isSense = extraArg1.equals("-sense");
+
+		String id;
+		BiFunction<CoreModel, String, String> resolver = null;
 		if (isSense)
 		{
-			Sense senseElement = model.sensesById.get(extraArg2);
-			synsetId = senseElement.getSynsetId();
+			id = args[iArg + 2];
+			resolver = (model, senseId) -> model.sensesById.get(senseId).getSynsetId();
 		}
 		else if (isOffset)
 		{
-			char pos = extraArg2.charAt(0);
-			long offset31 = Long.parseLong(extraArg3);
-			synsetId = String.format("%08d-%c", offset31, pos);
+			char pos = args[iArg + 2].charAt(0);
+			long offset31 = Long.parseLong(args[iArg + 3]);
+			id = String.format("%08d-%c", offset31, pos);
 		}
 		else
 		{
-			synsetId = extraArg1;
+			id = extraArg1;
 		}
+
+		new Grinder1(flags[0], resolver).grind(source, id);
+	}
+
+	private final int flags;
+
+	private final BiFunction<CoreModel, String, String> resolver;
+
+	public Grinder1(final int flags, BiFunction<CoreModel, String, String> resolver)
+	{
+		this.flags = flags;
+		this.resolver = resolver;
+	}
+
+	void grind(File source, String id) throws IOException
+	{
+		// Model
+		CoreModel model = Factory.makeCoreModel(source);
+
+		// SynsetId
+		String synsetId = resolver == null ? id : resolver.apply(model, id);
 
 		// Process
-		Synset synset = model.synsetsById.get(synsetId);
-		long offset = offsets.get(synsetId);
-		if (!offsets.containsValue(offset))
-		{
-			System.err.printf("%d is not a valid offset", offset);
-			System.exit(1);
-		}
+		String line = new LineProducer(flags).apply(model, synsetId);
+		consumeLine(line);
+	}
 
-		// Print line
-		String line = data(synset, offset, model.lexesByLemma, model.synsetsById, model.sensesById, offsets);
+	private void consumeLine(String line)
+	{
 		System.out.println(line);
 
 		// Parse line and pretty print
@@ -94,28 +107,5 @@ public class Grinder1
 		{
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Grind data for this synset
-	 *
-	 * @param synset       synset
-	 * @param offset       offset
-	 * @param lexesByLemma lexes mapped by lemma
-	 * @param synsetsById  synset elements mapped by id
-	 * @param sensesById   sense elements mapped by id
-	 * @param offsets      offsets mapped by synsetId
-	 * @return line
-	 */
-	public static String data(Synset synset, long offset, //
-			Map<String, List<Lex>> lexesByLemma, //
-			Map<String, Synset> synsetsById, //
-			Map<String, Sense> sensesById, //
-			Map<String, Long> offsets //
-	)
-	{
-		// Data
-		DataGrinder factory = new DataGrinder(lexesByLemma, synsetsById, sensesById, offsets);
-		return factory.getData(synset, offset);
 	}
 }
