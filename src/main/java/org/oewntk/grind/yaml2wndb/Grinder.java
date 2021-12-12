@@ -104,7 +104,7 @@ public class Grinder
 		}
 
 		// Model
-		Model model = Factory.makeModel(inDir, inDir2);
+		Model model = new Factory(inDir, inDir2).get();
 		System.err.printf("[Model] %s\n%s%n", Arrays.toString(model.getSources()), model.info());
 
 		// Heap

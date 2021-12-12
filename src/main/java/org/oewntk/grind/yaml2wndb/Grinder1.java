@@ -9,6 +9,7 @@ import org.oewntk.model.Model;
 import org.oewntk.parse.DataParser1;
 import org.oewntk.pojos.ParsePojoException;
 import org.oewntk.wndb.out.LineProducer;
+import org.oewntk.yaml.in.CoreFactory;
 import org.oewntk.yaml.in.Factory;
 
 import java.io.File;
@@ -83,7 +84,7 @@ public class Grinder1
 	void grind(File source, String id) throws IOException
 	{
 		// Model
-		CoreModel model = Factory.makeCoreModel(source);
+		CoreModel model = new CoreFactory(source).get();
 
 		// SynsetId
 		String synsetId = resolver == null ? id : resolver.apply(model, id);
