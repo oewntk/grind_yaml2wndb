@@ -8,8 +8,6 @@ import org.oewntk.model.Model;
 import org.oewntk.wndb.out.Flags;
 import org.oewntk.wndb.out.ModelConsumer;
 import org.oewntk.yaml.in.Factory;
-import org.oewntk.yaml.in.Memory;
-import org.oewntk.yaml.in.Memory.Unit;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,11 +31,11 @@ public class Grinder
 		{
 			if ("-traceTime".equals(args[i])) // if left and is "-traceTime"
 			{
-				result[0] |= Flags.traceTime;
+				Tracing.traceTime = true;
 			}
 			else if ("-traceHeap".equals(args[i])) // if left and is "-traceHeap"
 			{
-				result[0] |= Flags.traceHeap;
+				Tracing.traceHeap = true;
 			}
 			else if ("-compat:pointer".equals(args[i])) // if left and is "-compat:pointer"
 			{
@@ -69,24 +67,18 @@ public class Grinder
 	public static void main(String[] args) throws IOException
 	{
 		int[] flags = flags(args);
-		boolean traceHeap = (flags[0] & Flags.traceHeap) != 0;
-		boolean traceTime = (flags[0] & Flags.traceTime) != 0;
 		int iArg = flags[1];
 
-		// Timing
-		final long startTime = System.currentTimeMillis();
-
-		// Heap
-		if (traceHeap)
-		{
-			System.err.println(Memory.heapInfo("before maps,", Unit.M));
-		}
+		// Tracing
+		final long startTime = Tracing.start();
 
 		// Input
 		File inDir = new File(args[iArg]);
+		System.err.println("[Input] " + inDir.getAbsolutePath());
 
 		// Input2
 		File inDir2 = new File(args[iArg + 1]);
+		System.err.println("[Input2] " + inDir2.getAbsolutePath());
 
 		// Output
 		File outDir = new File(args[iArg + 2]);
@@ -95,32 +87,20 @@ public class Grinder
 			//noinspection ResultOfMethodCallIgnored
 			outDir.mkdirs();
 		}
-		System.err.println("Output " + outDir.getAbsolutePath());
+		System.err.println("[Output] " + outDir.getAbsolutePath());
 
-		// Heap
-		if (traceHeap)
-		{
-			System.err.println(Memory.heapInfo("before model,", Unit.M));
-		}
-
-		// Model
+		// Supply model
+		Tracing.progress("before model is supplied,", startTime);
 		Model model = new Factory(inDir, inDir2).get();
 		System.err.printf("[Model] %s\n%s%n", Arrays.toString(model.getSources()), model.info());
-
-		// Heap
-		if (traceHeap)
-		{
-			System.err.println(Memory.heapInfo("after model,", Unit.M));
-		}
+		Tracing.progress("after model is supplied,", startTime);
 
 		// Consume model
+		Tracing.progress("before model is consumed,", startTime);
 		new ModelConsumer(outDir, flags[0], System.out).grind(model);
+		Tracing.progress("after model is consumed,", startTime);
 
-		// Timing
-		final long endTime = System.currentTimeMillis();
-		if (traceTime)
-		{
-			System.err.println("Total execution time: " + (endTime - startTime) / 1000 + "s");
-		}
+		// End
+		Tracing.progress("total,", startTime);
 	}
 }

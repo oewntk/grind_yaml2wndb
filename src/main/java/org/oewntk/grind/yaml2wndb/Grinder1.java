@@ -5,12 +5,10 @@
 package org.oewntk.grind.yaml2wndb;
 
 import org.oewntk.model.CoreModel;
-import org.oewntk.model.Model;
 import org.oewntk.parse.DataParser1;
 import org.oewntk.pojos.ParsePojoException;
 import org.oewntk.wndb.out.LineProducer;
 import org.oewntk.yaml.in.CoreFactory;
-import org.oewntk.yaml.in.Factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class Grinder1
 	 *             [1] synsetid
 	 *             [1] -offset [2] pos, [3] offset)
 	 *             [1] -sense [2] senseid
-	 *
+	 *             <p>
 	 *             # POS (n|v|a|r|s)
 	 *             # OFFSET (ie 1740)
 	 * @throws IOException io
