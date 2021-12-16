@@ -53,7 +53,7 @@ public class Grinder1
 		if (isSense)
 		{
 			id = args[iArg + 2];
-			resolver = (model, senseId) -> model.sensesById.get(senseId).getSynsetId();
+			resolver = (model, senseId) -> model.getSensesById().get(senseId).getSynsetId();
 		}
 		else if (isOffset)
 		{
