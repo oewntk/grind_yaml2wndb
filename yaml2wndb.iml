@@ -12,6 +12,7 @@
       <excludeFolder url="file://$MODULE_DIR$/wndb" />
       <excludeFolder url="file://$MODULE_DIR$/wndb_compat" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/wndb_offsets" />
     </content>
     <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -19,7 +19,7 @@ import java.util.Arrays;
  * @author Bernard Bou
  * @see "https://wordnet.princeton.edu/documentation/wndb5wn"
  */
-public class Grinder
+public class Grind
 {
 	// Argument switches processing
 	public static int[] flags(String[] args) throws IOException
@@ -74,11 +74,11 @@ public class Grinder
 
 		// Input
 		File inDir = new File(args[iArg]);
-		System.err.println("[Input] " + inDir.getAbsolutePath());
+		Tracing.psInfo.println("[Input] " + inDir.getAbsolutePath());
 
 		// Input2
 		File inDir2 = new File(args[iArg + 1]);
-		System.err.println("[Input2] " + inDir2.getAbsolutePath());
+		Tracing.psInfo.println("[Input2] " + inDir2.getAbsolutePath());
 
 		// Output
 		File outDir = new File(args[iArg + 2]);
@@ -87,17 +87,17 @@ public class Grinder
 			//noinspection ResultOfMethodCallIgnored
 			outDir.mkdirs();
 		}
-		System.err.println("[Output] " + outDir.getAbsolutePath());
+		Tracing.psInfo.println("[Output] " + outDir.getAbsolutePath());
 
 		// Supply model
 		Tracing.progress("before model is supplied,", startTime);
 		Model model = new Factory(inDir, inDir2).get();
-		System.err.printf("[Model] %s\n%s%n", Arrays.toString(model.getSources()), model.info());
+		//Tracing.psInfo.printf("[Model] %s\n%s%n", Arrays.toString(model.getSources()), model.info());
 		Tracing.progress("after model is supplied,", startTime);
 
 		// Consume model
 		Tracing.progress("before model is consumed,", startTime);
-		new ModelConsumer(outDir, flags[0], System.out).grind(model);
+		new ModelConsumer(outDir, flags[0], Tracing.psInfo).grind(model);
 		Tracing.progress("after model is consumed,", startTime);
 
 		// End

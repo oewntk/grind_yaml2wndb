@@ -4,6 +4,7 @@
 
 package org.oewntk.grind.yaml2wndb;
 
+import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -16,9 +17,14 @@ import java.util.Locale;
  */
 public class Tracing
 {
-	static public boolean traceHeap = false;
+	static final PrintStream psInfo = System.out;
+	static final PrintStream psErr = System.err;
+	private static final PrintStream psHeap = System.out;
+	private static final PrintStream psTime = System.out;
 
-	static public boolean traceTime = false;
+	public static boolean traceHeap = false;
+
+	public static boolean traceTime = false;
 
 	public static long start()
 	{
@@ -27,7 +33,8 @@ public class Tracing
 		// heap state
 		if (traceHeap)
 		{
-			System.err.println(Memory.heapInfo("before,", Memory.Unit.M));
+			psHeap.println("[Memory]: " + Memory.memoryInfo("before,", Memory.Unit.M));
+			psHeap.println("[Heap]: " + Memory.heapInfo("before,", Memory.Unit.M));
 		}
 		return startTime;
 	}
@@ -36,14 +43,14 @@ public class Tracing
 	{
 		if (traceTime)
 		{
-		final long endTime = System.currentTimeMillis();
-			System.err.println("[Time]: " + (endTime - startTime) / 1000 + "s");
+			final long endTime = System.currentTimeMillis();
+			psTime.println("[Time]: " + (endTime - startTime) / 1000 + "s");
 		}
 
 		// heap state
 		if (traceHeap)
 		{
-			System.err.println(Memory.heapInfo(message, Memory.Unit.M));
+			psHeap.println("[Heap]: " + Memory.heapInfo(message, Memory.Unit.M));
 		}
 	}
 
@@ -87,7 +94,7 @@ public class Tracing
 			avail /= u.div;
 
 			final DecimalFormat formatter = Memory.formatter();
-			return String.format("[Heap] %s used: %s%s maxfree: %s%s", //
+			return String.format("%s used: %s%s maxfree: %s%s", //
 					tag, //
 					formatter.format(used), u, //
 					formatter.format(avail), u //
@@ -110,7 +117,7 @@ public class Tracing
 			avail /= u.div;
 
 			final DecimalFormat formatter = Memory.formatter();
-			return String.format("Memory [%s] max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s", //
+			return String.format("%s max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s", //
 					tag, //
 					formatter.format(max), u, //
 					formatter.format(total), u, //

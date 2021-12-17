@@ -20,7 +20,7 @@ import java.util.function.BiFunction;
  * @author Bernard Bou
  * @see "https://wordnet.princeton.edu/documentation/wndb5wn"
  */
-public class Grinder1
+public class Grind1
 {
 	/**
 	 * Main entry point
@@ -37,7 +37,7 @@ public class Grinder1
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		int[] flags = Grinder.flags(args);
+		int[] flags = Grind.flags(args);
 		int iArg = flags[1];
 
 		// Input
@@ -66,14 +66,14 @@ public class Grinder1
 			id = extraArg1;
 		}
 
-		new Grinder1(flags[0], resolver).grind(source, id);
+		new Grind1(flags[0], resolver).grind(source, id);
 	}
 
 	private final int flags;
 
 	private final BiFunction<CoreModel, String, String> resolver;
 
-	public Grinder1(final int flags, BiFunction<CoreModel, String, String> resolver)
+	public Grind1(final int flags, BiFunction<CoreModel, String, String> resolver)
 	{
 		this.flags = flags;
 		this.resolver = resolver;
