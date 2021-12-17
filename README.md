@@ -40,15 +40,15 @@ partially grinds the WNDB database and output line at *offset* of *data.{noun|ve
 
 *where*
 
-[YAML]    directory where OEWN distribution YAML files are
+[YAML] directory where OEWN distribution YAML files are
 
-[YAML2]  directory where extra YAML files are
+[YAML2] directory where extra YAML files are
 
-[WNDB]  directory where WNDB files are output
+[WNDB] directory where WNDB files are output
 
-[POS]      n|v|a|r
+[POS] n|v|a|r
 
-[OFS]      offset
+[OFS] offset
 
 ## Maven Central
 
