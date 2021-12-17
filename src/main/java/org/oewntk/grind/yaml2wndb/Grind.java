@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class Grind
 {
 	// Argument switches processing
-	public static int[] flags(String[] args) throws IOException
+	public static int[] flags(String[] args)
 	{
 		int[] result = new int[2];
 

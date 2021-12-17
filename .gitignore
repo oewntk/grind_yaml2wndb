@@ -1,11 +1,9 @@
 /target/
-/yaml/
-/yaml2/
-yaml
-yaml2
-/wndb/
-/wndb_compat/
-/wndb_offsets/
+
+/yaml*/
+/yaml*
+/wndb*/
+/wndb*
 **/_*/
 **/_*
 #**/*.jar
