@@ -104,7 +104,7 @@ public class Grind1
 		}
 		catch (ParsePojoException e)
 		{
-			e.printStackTrace();
+			e.printStackTrace(Tracing.psErr);
 		}
 	}
 }
