@@ -50,7 +50,7 @@ public class GrindOffsets
 		// Supply model
 		Tracing.progress("before model is supplied,", startTime);
 		CoreModel model = new CoreFactory(inDir).get();
-		//Tracing.psInfo.printf("[Model] %s\n%s%n", Arrays.toString(model.getSources()), model.info());
+		//Tracing.psInfo.printf("[CoreModel] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info());
 		Tracing.progress("after model is supplied,", startTime);
 
 		// Consume model
