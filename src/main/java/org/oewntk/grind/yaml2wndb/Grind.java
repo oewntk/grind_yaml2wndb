@@ -11,7 +11,6 @@ import org.oewntk.yaml.in.Factory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Main class that generates the WN database in the WNDB format as per wndb(5WN)

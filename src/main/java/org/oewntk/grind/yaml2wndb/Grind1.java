@@ -11,7 +11,6 @@ import org.oewntk.wndb.out.LineProducer;
 import org.oewntk.yaml.in.CoreFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.function.BiFunction;
 
 /**
@@ -33,9 +32,8 @@ public class Grind1
 	 *             <p>
 	 *             # POS (n|v|a|r|s)
 	 *             # OFFSET (ie 1740)
-	 * @throws IOException io
 	 */
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args)
 	{
 		int[] flags = Grind.flags(args);
 		int iArg = flags[1];
@@ -79,7 +77,7 @@ public class Grind1
 		this.resolver = resolver;
 	}
 
-	void grind(File source, String id) throws IOException
+	void grind(File source, String id)
 	{
 		// Model
 		CoreModel model = new CoreFactory(source).get();
