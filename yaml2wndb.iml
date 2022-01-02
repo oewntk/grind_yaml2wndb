@@ -17,9 +17,9 @@
     <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="model" />
-    <orderEntry type="module" module-name="inyaml" />
+    <orderEntry type="library" name="Maven: io.github.oewntk:fromyaml:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.29" level="project" />
-    <orderEntry type="module" module-name="outwndb" />
+    <orderEntry type="library" name="Maven: io.github.oewntk:towndb:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="parse" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />

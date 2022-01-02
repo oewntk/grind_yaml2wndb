@@ -9,11 +9,11 @@
 
 This library reads from a model in YAML format and writes it to WNDB format.
 
-Project [grind_yaml2wndb](https://github.com/x-englishwordnet/grind_yaml2wndb)
+Project [grind_yaml2wndb](https://github.com/oewntk/grind_yaml2wndb)
 
-See also [model](https://github.com/x-englishwordnet/model/blob/master/README.md).
+See also [model](https://github.com/oewntk/model/blob/master/README.md).
 
-See also [fromyaml](https://github.com/x-englishwordnet/fromyaml/blob/master/README.md).
+See also [fromyaml](https://github.com/oewntk/fromyaml/blob/master/README.md).
 
 See also [towndb](https://github.com/x-englishwordnet/towndb/blob/master/README.md).
 
