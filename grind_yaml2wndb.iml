@@ -20,7 +20,7 @@
     <orderEntry type="module" module-name="fromyaml" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.29" level="project" />
     <orderEntry type="module" module-name="towndb" />
-    <orderEntry type="module" module-name="parse-wndb" />
+    <orderEntry type="module" module-name="parse_wndb" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>
