@@ -4,6 +4,8 @@
 /yaml*
 /wndb*/
 /wndb*
+/dist*/
+/dist*
 **/_*/
 **/_*
 #**/*.jar
