@@ -4,6 +4,9 @@
 /yaml*
 /wndb*/
 /wndb*
+/repo/
+/repo
+/dist/
 /dist*/
 /dist*
 **/_*/
