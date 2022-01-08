@@ -13,10 +13,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Main class that generates the WN database in the WNDB format as per wndb(5WN)
+ * Main class that generates the WN database offset map
  *
  * @author Bernard Bou
- * @see "https://wordnet.princeton.edu/documentation/wndb5wn"
  */
 public class GrindOffsets
 {

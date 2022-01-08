@@ -21,6 +21,65 @@ import java.util.function.BiFunction;
  */
 public class Grind1
 {
+	private final int flags;
+
+	/**
+	 * Resolver of synset id from sense id
+	 */
+	private final BiFunction<CoreModel, String, String> resolver;
+
+	/**
+	 * Constructor
+	 *
+	 * @param flags    flags
+	 * @param resolver sensekey-to-synsetid resolver
+	 */
+	public Grind1(final int flags, BiFunction<CoreModel, String, String> resolver)
+	{
+		this.flags = flags;
+		this.resolver = resolver;
+	}
+
+	/**
+	 * Grind
+	 *
+	 * @param source source
+	 * @param id     id, either synset id or sense id
+	 */
+	void grind(final File source, final String id)
+	{
+		// Model
+		CoreModel model = new CoreFactory(source).get();
+
+		// SynsetId
+		String synsetId = resolver == null ? id : resolver.apply(model, id);
+
+		// Process
+		String line = new LineProducer(flags).apply(model, synsetId);
+		consumeLine(line);
+	}
+
+	/**
+	 * Consume produced line
+	 *
+	 * @param line line
+	 */
+	private void consumeLine(final String line)
+	{
+		System.out.println(line);
+
+		// Parse line and pretty print
+		try
+		{
+			org.oewntk.pojos.Synset s = DataParser1.parseSynset(line, false);
+			System.out.println(s.toPrettyString());
+		}
+		catch (ParsePojoException e)
+		{
+			e.printStackTrace(Tracing.psErr);
+		}
+	}
+
 	/**
 	 * Main entry point
 	 *
@@ -33,7 +92,7 @@ public class Grind1
 	 *             # POS (n|v|a|r|s)
 	 *             # OFFSET (ie 1740)
 	 */
-	public static void main(String[] args)
+	public static void main(final String[] args)
 	{
 		int[] flags = Grind.flags(args);
 		int iArg = flags[1];
@@ -65,44 +124,5 @@ public class Grind1
 		}
 
 		new Grind1(flags[0], resolver).grind(source, id);
-	}
-
-	private final int flags;
-
-	private final BiFunction<CoreModel, String, String> resolver;
-
-	public Grind1(final int flags, BiFunction<CoreModel, String, String> resolver)
-	{
-		this.flags = flags;
-		this.resolver = resolver;
-	}
-
-	void grind(File source, String id)
-	{
-		// Model
-		CoreModel model = new CoreFactory(source).get();
-
-		// SynsetId
-		String synsetId = resolver == null ? id : resolver.apply(model, id);
-
-		// Process
-		String line = new LineProducer(flags).apply(model, synsetId);
-		consumeLine(line);
-	}
-
-	private void consumeLine(String line)
-	{
-		System.out.println(line);
-
-		// Parse line and pretty print
-		try
-		{
-			org.oewntk.pojos.Synset s = DataParser1.parseSynset(line, false);
-			System.out.println(s.toPrettyString());
-		}
-		catch (ParsePojoException e)
-		{
-			e.printStackTrace(Tracing.psErr);
-		}
 	}
 }

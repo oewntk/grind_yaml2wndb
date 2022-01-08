@@ -20,8 +20,13 @@ import java.io.IOException;
  */
 public class Grind
 {
-	// Argument switches processing
-	public static int[] flags(String[] args)
+	/**
+	 * Argument switches processing
+	 *
+	 * @param args command-line arguments
+	 * @return int[0]=flags, int[1]=next arg to process
+	 */
+	public static int[] flags(final String[] args)
 	{
 		int[] result = new int[2];
 
@@ -63,7 +68,7 @@ public class Grind
 	 * @param args command-line arguments [-compat:lexid] [-compat:pointer] yamlDir [outputDir]
 	 * @throws IOException io
 	 */
-	public static void main(String[] args) throws IOException
+	public static void main(final String[] args) throws IOException
 	{
 		int[] flags = flags(args);
 		int iArg = flags[1];
