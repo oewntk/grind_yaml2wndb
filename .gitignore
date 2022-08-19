@@ -4,12 +4,11 @@
 /yaml*
 /wndb*/
 /wndb*
-/repo/
-/repo
+/dist_repo/
+/dist_repo
 /dist/
 /dist*/
 /dist*
 **/_*/
 **/_*
 #**/*.jar
-
