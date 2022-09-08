@@ -1,5 +1,13 @@
 #/bin/bash
 
+# P A R A M S
+
+dbtag=$1
+shift
+if [ -z "${dbtag}" ]; then
+  dbtag=2022
+fi
+
 # C O L O R S
 
 R='\u001b[31m'
@@ -9,9 +17,6 @@ Y='\u001b[33m'
 M='\u001b[35m'
 C='\u001b[36m'
 Z='\u001b[0m'
-
-TAG=2022
-BUILD=1.22
 
 # D I R S
 
@@ -24,12 +29,12 @@ echo "pack to ${DISTDIR} from ${DATADIR}"
 
 # A R C H I V E S
 
-TAR_ARCHIVE=${DISTDIR}/oewn_${TAG}.dict.tar.gz
-ZIP_ARCHIVE=${DISTDIR}/oewn_${TAG}.zip
-TAR_ARCHIVE_MIN=${DISTDIR}/oewn_${TAG}_bare.dict.tar.gz
-ZIP_ARCHIVE_MIN=${DISTDIR}/oewn_${TAG}_bare.zip
-TAR_ARCHIVE_COMPAT=${DISTDIR}/oewn_${TAG}_compat.dict.tar.gz
-ZIP_ARCHIVE_COMPAT=${DISTDIR}/oewn_${TAG}_compat.zip
+TAR_ARCHIVE=${DISTDIR}/oewn_${dbtag}.dict.tar.gz
+ZIP_ARCHIVE=${DISTDIR}/oewn_${dbtag}.zip
+TAR_ARCHIVE_MIN=${DISTDIR}/oewn_${dbtag}_bare.dict.tar.gz
+ZIP_ARCHIVE_MIN=${DISTDIR}/oewn_${dbtag}_bare.zip
+TAR_ARCHIVE_COMPAT=${DISTDIR}/oewn_${dbtag}_compat.dict.tar.gz
+ZIP_ARCHIVE_COMPAT=${DISTDIR}/oewn_${dbtag}_compat.zip
 
 # M A I N
 
