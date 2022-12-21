@@ -19,7 +19,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="module" module-name="fromyaml" />
-    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.31" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.33" level="project" />
     <orderEntry type="module" module-name="towndb" />
     <orderEntry type="library" name="Maven: io.github.oewntk:parse_wndb:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
