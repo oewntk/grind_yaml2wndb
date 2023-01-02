@@ -38,6 +38,8 @@ ZIP_ARCHIVE_COMPAT=${DISTDIR}/oewn_${dbtag}_compat.zip
 
 # M A I N
 
+# prepare dict container
+
 if [ ! -e "${DATADIR}/wndb" -a ! -d "${DATADIR}/wndb" ]; then
   echo -e "${R}Non existent wndb dir${Z}"
   exit 1
@@ -60,6 +62,7 @@ echo
 echo -e "${M}pack to $(basename ${ZIP_ARCHIVE})${Z}"
 rm -f ${ZIP_ARCHIVE}
 zip -j ${ZIP_ARCHIVE} ${DATADIR}/dict/*
+zip ${ZIP_ARCHIVE} OEWN_LICENSE.md
 echo -e "${C}"
 unzip -l ${ZIP_ARCHIVE}
 echo -en "${Z}"
@@ -70,7 +73,7 @@ echo
 
 echo -e "${M}pack to $(basename ${TAR_ARCHIVE_MIN})${Z}"
 rm -f ${TAR_ARCHIVE_MIN}
-tar czhf ${TAR_ARCHIVE_MIN} -C ${DATADIR} --exclude --exclude dict/lexnames --exclude dict/sensemap.txt --exclude dict/cntlist --exclude dict/cntlist.rev dict -C ${DATADIR} OEWN_LICENSE.md
+tar czhf ${TAR_ARCHIVE_MIN} -C ${DATADIR} --exclude --exclude dict/lexnames --exclude dict/sensemap.txt --exclude dict/cntlist --exclude dict/cntlist.rev dict -C ${DATADIR} OEWN_LICENSE_short.md
 echo -e "${C}"
 tar tvf ${TAR_ARCHIVE_MIN}
 echo -en "${Z}"
@@ -80,6 +83,7 @@ echo
 echo -e "${M}pack to $(basename ${ZIP_ARCHIVE_MIN})${Z}"
 rm -f ${ZIP_ARCHIVE_MIN}
 zip -j ${ZIP_ARCHIVE_MIN} ${DATADIR}/dict/* -x "*lexnames" -x "*sensemap.txt" -x "*cntlist" -x "*cntlist.rev"
+zip ${ZIP_ARCHIVE_MIN} OEWN_LICENSE_short.md
 echo -e "${C}"
 unzip -l ${ZIP_ARCHIVE_MIN}
 echo -en "${Z}"
@@ -108,6 +112,7 @@ echo
 echo -e "${M}pack to $(basename ${ZIP_ARCHIVE_COMPAT})${Z}"
 rm -f ${ZIP_ARCHIVE_COMPAT}
 zip -j ${ZIP_ARCHIVE_COMPAT} ${DATADIR}/dict/*
+zip ${ZIP_ARCHIVE_COMPAT} OEWN_LICENSE.md
 echo -e "${C}"
 unzip -l ${ZIP_ARCHIVE_COMPAT}
 echo -en "${Z}"
