@@ -110,7 +110,7 @@ public class Grind1
 		if (isSense)
 		{
 			id = args[iArg + 2];
-			resolver = (model, senseId) -> model.getSensesById().get(senseId).getSynsetId();
+			resolver = (model, senseId) -> model.getSensesById().get(senseId).synsetId;
 		}
 		else if (isOffset)
 		{
