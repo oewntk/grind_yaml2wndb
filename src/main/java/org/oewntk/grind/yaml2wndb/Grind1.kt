@@ -1,44 +1,31 @@
 /*
  * Copyright (c) 2021-2021. Bernard Bou.
  */
+package org.oewntk.grind.yaml2wndb
 
-package org.oewntk.grind.yaml2wndb;
+import org.oewntk.grind.yaml2wndb.Grind.flags
+import org.oewntk.model.CoreModel
+import org.oewntk.parse.DataParser1
+import org.oewntk.pojos.ParsePojoException
+import org.oewntk.wndb.out.LineProducer
+import org.oewntk.yaml.`in`.CoreFactory
+import java.io.File
 
-import org.oewntk.model.CoreModel;
-import org.oewntk.parse.DataParser1;
-import org.oewntk.pojos.ParsePojoException;
-import org.oewntk.wndb.out.LineProducer;
-import org.oewntk.yaml.in.CoreFactory;
-
-import java.io.File;
-import java.util.function.BiFunction;
+typealias Resolver = (CoreModel, String) -> String?
 
 /**
  * Main class that generates one line of the WN database in the WNDB format as per wndb(5WN)
  *
+ * @param flags    flags
+ * @param resolver sensekey-to-synsetid resolver
+ *
  * @author Bernard Bou
  * @see "https://wordnet.princeton.edu/documentation/wndb5wn"
  */
-public class Grind1
-{
-	private final int flags;
-
-	/**
-	 * Resolver of synset id from sense id
-	 */
-	private final BiFunction<CoreModel, String, String> resolver;
-
-	/**
-	 * Constructor
-	 *
-	 * @param flags    flags
-	 * @param resolver sensekey-to-synsetid resolver
-	 */
-	public Grind1(final int flags, BiFunction<CoreModel, String, String> resolver)
-	{
-		this.flags = flags;
-		this.resolver = resolver;
-	}
+class Grind1(
+	private val flags: Int,
+	private val resolver: Resolver?
+) {
 
 	/**
 	 * Grind
@@ -46,17 +33,17 @@ public class Grind1
 	 * @param source source
 	 * @param id     id, either synset id or sense id
 	 */
-	void grind(final File source, final String id)
-	{
+	fun grind(source: File, id: String) {
+
 		// Model
-		CoreModel model = new CoreFactory(source).get();
+		val model = CoreFactory(source).get()!!
 
 		// SynsetId
-		String synsetId = resolver == null ? id : resolver.apply(model, id);
+		val synsetId = if (resolver != null) resolver.invoke(model, id) ?: id else id
 
 		// Process
-		String line = new LineProducer(flags).apply(model, synsetId);
-		consumeLine(line);
+		val line: String = LineProducer(flags).invoke(model, synsetId)
+		consumeLine(line)
 	}
 
 	/**
@@ -64,65 +51,60 @@ public class Grind1
 	 *
 	 * @param line line
 	 */
-	private void consumeLine(final String line)
-	{
-		System.out.println(line);
+	private fun consumeLine(line: String) {
+		println(line)
 
 		// Parse line and pretty print
-		try
-		{
-			org.oewntk.pojos.Synset s = DataParser1.parseSynset(line, false);
-			System.out.println(s.toPrettyString());
-		}
-		catch (ParsePojoException e)
-		{
-			e.printStackTrace(Tracing.psErr);
+		try {
+			val s = DataParser1.parseSynset(line, false)
+			println(s.toPrettyString())
+		} catch (e: ParsePojoException) {
+			e.printStackTrace(Tracing.psErr)
 		}
 	}
 
-	/**
-	 * Main entry point
-	 *
-	 * @param args command-line arguments (
-	 *             [0] source,
-	 *             [1] synsetid
-	 *             [1] -offset [2] pos, [3] offset)
-	 *             [1] -sense [2] senseid
-	 *             <p>
-	 *             # POS (n|v|a|r|s)
-	 *             # OFFSET (ie 1740)
-	 */
-	public static void main(final String[] args)
-	{
-		int[] flags = Grind.flags(args);
-		int iArg = flags[1];
+	companion object {
 
-		// Input
-		File source = new File(args[iArg]);
+		/**
+		 * Main entry point
+		 *
+		 * @param args command-line arguments
+		 * ```
+		 * [0] source,
+		 * [1] synsetid
+		 * [1] -offset [2] pos, [3] offset
+		 * [1] -sense [2] senseid
+		 * ```
+		 *
+		 * # POS (n|v|a|r|s)
+		 * # OFFSET (ie 1740)
+		 */
+		@JvmStatic
+		fun main(args: Array<String>) {
+			val flags = flags(args)
+			val iArg = flags[1]
 
-		// SynsetId, SenseId, w31 offset
-		String extraArg1 = args[iArg + 1];
-		boolean isOffset = extraArg1.equals("-offset");
-		boolean isSense = extraArg1.equals("-sense");
+			// Input
+			val source = File(args[iArg])
 
-		String id;
-		BiFunction<CoreModel, String, String> resolver = null;
-		if (isSense)
-		{
-			id = args[iArg + 2];
-			resolver = (model, senseId) -> model.getSensesById().get(senseId).synsetId;
+			// SynsetId, SenseId, w31 offset
+			val extraArg1 = args[iArg + 1]
+			val isOffset = extraArg1 == "-offset"
+			val isSense = extraArg1 == "-sense"
+
+			val id: String
+			var resolver: Resolver? = null
+			if (isSense) {
+				id = args[iArg + 2]
+				resolver = { model: CoreModel, senseId: String -> model.sensesById!![senseId]!!.synsetId }
+			} else if (isOffset) {
+				val pos = args[iArg + 2][0]
+				val offset31 = args[iArg + 3].toLong()
+				id = String.format("%08d-%c", offset31, pos)
+			} else {
+				id = extraArg1
+			}
+			Grind1(flags[0], resolver).grind(source, id)
 		}
-		else if (isOffset)
-		{
-			char pos = args[iArg + 2].charAt(0);
-			long offset31 = Long.parseLong(args[iArg + 3]);
-			id = String.format("%08d-%c", offset31, pos);
-		}
-		else
-		{
-			id = extraArg1;
-		}
-
-		new Grind1(flags[0], resolver).grind(source, id);
 	}
 }

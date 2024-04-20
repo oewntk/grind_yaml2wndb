@@ -1,129 +1,115 @@
 /*
  * Copyright (c) $originalComment.match("Copyright \(c\) (\d+)", 1, "-")2021. Bernard Bou.
  */
+package org.oewntk.grind.yaml2wndb
 
-package org.oewntk.grind.yaml2wndb;
-
-import java.io.PrintStream;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.io.PrintStream
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * Heap Memory utilities
  *
  * @author Bernard Bou
  */
-public class Tracing
-{
-	static final PrintStream psInfo = System.out;
-	static final PrintStream psErr = System.err;
-	private static final PrintStream psHeap = System.out;
-	private static final PrintStream psTime = System.out;
+object Tracing {
 
-	public static boolean traceHeap = false;
+	@JvmField
+	val psInfo: PrintStream = System.out
 
-	public static boolean traceTime = false;
+	val psErr: PrintStream = System.err
 
-	public static long start()
-	{
-		final long startTime = System.currentTimeMillis();
+	private val psHeap: PrintStream = System.out
 
-		// heap state
-		if (traceHeap)
-		{
-			psHeap.println("[Memory]: " + Memory.memoryInfo("before,", Memory.Unit.M));
-			psHeap.println("[Heap]: " + Memory.heapInfo("before,", Memory.Unit.M));
-		}
-		return startTime;
-	}
+	private val psTime: PrintStream = System.out
 
-	public static void progress(String message, long startTime)
-	{
-		if (traceTime)
-		{
-			final long endTime = System.currentTimeMillis();
-			psTime.println("[Time]: " + (endTime - startTime) / 1000 + "s");
-		}
+	var traceHeap: Boolean = false
+
+	var traceTime: Boolean = false
+
+	@JvmStatic
+	fun start(): Long {
+		val startTime = System.currentTimeMillis()
 
 		// heap state
-		if (traceHeap)
-		{
-			psHeap.println("[Heap]: " + Memory.heapInfo(message, Memory.Unit.M));
+		if (traceHeap) {
+			psHeap.println("[Memory]: " + Memory.memoryInfo("before,", Memory.Unit.M))
+			psHeap.println("[Heap]: " + Memory.heapInfo("before,", Memory.Unit.M))
+		}
+		return startTime
+	}
+
+	@JvmStatic
+	fun progress(message: String?, startTime: Long) {
+		if (traceTime) {
+			val endTime = System.currentTimeMillis()
+			psTime.println("[Time]: " + (endTime - startTime) / 1000 + "s")
+		}
+
+		// heap state
+		if (traceHeap) {
+			psHeap.println("[Heap]: " + Memory.heapInfo(message, Memory.Unit.M))
 		}
 	}
 
-	static public class Memory
-	{
-		private Memory()
-		{
+	object Memory {
+		private fun formatter(): DecimalFormat {
+			val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+			val symbols = formatter.decimalFormatSymbols
+			symbols.groupingSeparator = ' '
+			formatter.decimalFormatSymbols = symbols
+			return formatter
 		}
 
-		public enum Unit
-		{
-			U(1), K(1024 * U.div), M(1024 * K.div), G(1024 * M.div);
+		fun heapInfo(tag: String?, u: Unit): String {
+			val max = Runtime.getRuntime().maxMemory()
+			val total = Runtime.getRuntime().totalMemory()
+			val free = Runtime.getRuntime().freeMemory()
+			var used = total - free
+			val future = max - total
+			var avail = free + future
 
-			public final long div;
+			used /= u.div
+			avail /= u.div
 
-			Unit(final long div)
-			{
-				this.div = div;
-			}
+			val formatter = formatter()
+			return String.format(
+				"%s used: %s%s maxfree: %s%s",  //
+				tag,  //
+				formatter.format(used), u,  //
+				formatter.format(avail), u //
+			)
 		}
 
-		static DecimalFormat formatter()
-		{
-			final DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-			final DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
-			symbols.setGroupingSeparator(' ');
-			formatter.setDecimalFormatSymbols(symbols);
-			return formatter;
+		fun memoryInfo(tag: String?, u: Unit): String {
+			var max = Runtime.getRuntime().maxMemory()
+			var total = Runtime.getRuntime().totalMemory()
+			var free = Runtime.getRuntime().freeMemory()
+			var used = total - free
+			val future = max - total
+			var avail = free + future
+
+			max /= u.div // This will return Long.MAX_VALUE if there is no preset limit
+			total /= u.div
+			free /= u.div
+			used /= u.div
+			avail /= u.div
+
+			val formatter = formatter()
+			return String.format(
+				"%s max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s",  //
+				tag,  //
+				formatter.format(max), u,  //
+				formatter.format(total), u,  //
+				formatter.format(used), u,  //
+				formatter.format(free), u,  //
+				formatter.format(avail), u
+			)
 		}
 
-		public static String heapInfo(final String tag, final Unit u)
-		{
-			final long max = Runtime.getRuntime().maxMemory();
-			final long total = Runtime.getRuntime().totalMemory();
-			final long free = Runtime.getRuntime().freeMemory();
-			long used = total - free;
-			final long future = max - total;
-			long avail = free + future;
-
-			used /= u.div;
-			avail /= u.div;
-
-			final DecimalFormat formatter = Memory.formatter();
-			return String.format("%s used: %s%s maxfree: %s%s", //
-					tag, //
-					formatter.format(used), u, //
-					formatter.format(avail), u //
-			);
-		}
-
-		public static String memoryInfo(final String tag, final Unit u)
-		{
-			long max = Runtime.getRuntime().maxMemory();
-			long total = Runtime.getRuntime().totalMemory();
-			long free = Runtime.getRuntime().freeMemory();
-			long used = total - free;
-			final long future = max - total;
-			long avail = free + future;
-
-			max /= u.div; // This will return Long.MAX_VALUE if there is no preset limit
-			total /= u.div;
-			free /= u.div;
-			used /= u.div;
-			avail /= u.div;
-
-			final DecimalFormat formatter = Memory.formatter();
-			return String.format("%s max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s", //
-					tag, //
-					formatter.format(max), u, //
-					formatter.format(total), u, //
-					formatter.format(used), u, //
-					formatter.format(free), u, //
-					formatter.format(avail), u);
+		enum class Unit(val div: Long) {
+			U(1), K(1024 * U.div), M(1024 * K.div), G(1024 * M.div)
 		}
 	}
 }

@@ -1,64 +1,66 @@
 /*
  * Copyright (c) 2021-2021. Bernard Bou.
  */
+package org.oewntk.grind.yaml2wndb
 
-package org.oewntk.grind.yaml2wndb;
-
-import org.oewntk.model.CoreModel;
-import org.oewntk.wndb.out.OffsetMapper;
-import org.oewntk.wndb.out.OffsetSerializer;
-import org.oewntk.yaml.in.CoreFactory;
-
-import java.io.File;
-import java.io.IOException;
+import org.oewntk.grind.yaml2wndb.Grind.flags
+import org.oewntk.grind.yaml2wndb.Tracing.progress
+import org.oewntk.grind.yaml2wndb.Tracing.start
+import org.oewntk.wndb.out.OffsetMapper
+import org.oewntk.wndb.out.OffsetSerializer
+import org.oewntk.yaml.`in`.CoreFactory
+import java.io.File
+import java.io.IOException
 
 /**
  * Main class that generates the WN database offset map
  *
  * @author Bernard Bou
  */
-public class GrindOffsets
-{
+object GrindOffsets {
 	/**
 	 * Main entry point
 	 *
-	 * @param args command-line arguments [-compat:lexid] [-compat:pointer] yamlDir [outputDir]
+	 * @param args command-line arguments
+	 * ```
+	 * [-compat:lexid] [-compat:pointer] yamlDir [outputDir]
+	 * ```
+	 *
 	 * @throws IOException io
 	 */
-	public static void main(String[] args) throws IOException
-	{
-		int[] flags = Grind.flags(args);
-		int iArg = flags[1];
+	@Throws(IOException::class)
+	@JvmStatic
+	fun main(args: Array<String>) {
+		val flags = flags(args)
+		val iArg = flags[1]
 
 		// Tracing
-		final long startTime = Tracing.start();
+		val startTime = start()
 
 		// Input
-		File inDir = new File(args[iArg]);
-		Tracing.psInfo.println("[Input] " + inDir.getAbsolutePath());
+		val inDir = File(args[iArg])
+		Tracing.psInfo.println("[Input] " + inDir.absolutePath)
 
 		// Output
-		File outDir = new File(args[iArg + 1]);
-		if (!outDir.exists())
-		{
-			//noinspection ResultOfMethodCallIgnored
-			outDir.mkdirs();
+		val outDir = File(args[iArg + 1])
+		if (!outDir.exists()) {
+			outDir.mkdirs()
 		}
-		Tracing.psInfo.println("[Output] " + outDir.getAbsolutePath());
+		Tracing.psInfo.println("[Output] " + outDir.absolutePath)
 
 		// Supply model
-		Tracing.progress("before model is supplied,", startTime);
-		CoreModel model = new CoreFactory(inDir).get();
+		progress("before model is supplied,", startTime)
+		val model = CoreFactory(inDir).get()
 		//Tracing.psInfo.printf("[CoreModel] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info());
-		Tracing.progress("after model is supplied,", startTime);
+		progress("after model is supplied,", startTime)
 
 		// Consume model
-		Tracing.progress("before model is consumed,", startTime);
-		new OffsetMapper(outDir, flags[0], Tracing.psInfo).grind(model);
-		new OffsetSerializer(outDir, flags[0], Tracing.psInfo).grind(model);
-		Tracing.progress("after model is consumed,", startTime);
+		progress("before model is consumed,", startTime)
+		OffsetMapper(outDir, flags[0], Tracing.psInfo).grind(model!!)
+		OffsetSerializer(outDir, flags[0], Tracing.psInfo).grind(model)
+		progress("after model is consumed,", startTime)
 
 		// End
-		Tracing.progress("total,", startTime);
+		progress("total,", startTime)
 	}
 }
