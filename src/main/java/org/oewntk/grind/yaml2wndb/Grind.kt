@@ -37,13 +37,13 @@ object Grind {
 				Tracing.traceHeap = true
 			} else if ("-compat:pointer" == args[i]) // if left and is "-compat:pointer"
 			{
-				result[0] = result[0] or Flags.pointerCompat
+				result[0] = result[0] or Flags.POINTER_COMPAT
 			} else if ("-compat:lexid" == args[i]) // if left and is "-compat:lexid"
 			{
-				result[0] = result[0] or Flags.lexIdCompat
+				result[0] = result[0] or Flags.LEXID_COMPAT
 			} else if ("-compat:verbframe" == args[i]) // if left and is "-compat:verbframe"
 			{
-				result[0] = result[0] or Flags.verbFrameCompat
+				result[0] = result[0] or Flags.VERBFRAME_COMPAT
 			} else {
 				break
 			}
