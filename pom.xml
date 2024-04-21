@@ -10,7 +10,7 @@
 
 	<groupId>io.github.oewntk</groupId>
 	<artifactId>yaml2wndb</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>yaml_to_wndb</name>
 	<description>Read YAML Wordnet model and export it to WNDB files.</description>
 	<url>https://github.com/oewntk/grind_yaml2wndb</url>
@@ -26,17 +26,17 @@
 		<dependency>
 			<groupId>io.github.oewntk</groupId>
 			<artifactId>model</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.oewntk</groupId>
 			<artifactId>fromyaml</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.oewntk</groupId>
 			<artifactId>towndb</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.oewntk</groupId>
