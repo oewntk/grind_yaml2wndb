@@ -17,7 +17,8 @@ See also [fromyaml](https://github.com/oewntk/fromyaml/blob/master/README.md).
 
 See also [towndb](https://github.com/oewntk/towndb/blob/master/README.md).
 
-See also [oewntk](https://github.com/oewntk) and [globalwordnet/english-wordnet](https://github.com/globalwordnet/english-wordnet).
+See also [oewntk](https://github.com/oewntk)
+and [globalwordnet/english-wordnet](https://github.com/globalwordnet/english-wordnet).
 
 ## Dataflow
 
@@ -32,7 +33,6 @@ This output conforms to the **WNDB(5WN)** format (and is to be found in the _wnd
 `grind.sh [YAML] [YAML2] [WNDB]`
 
 grinds the WNDB database
-
 
 `grind1.sh [YAML] [YAML2] [POS] [OFS]`
 
