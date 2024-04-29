@@ -24,4 +24,5 @@ fi
 mkdir -p "${OUTDIR}"
 echo "DIR:   "${OUTDIR}"" 1>&2;
 
-java -ea -jar oewn-grind-yaml2wndb.jar ${COMPAT_POINTER} ${COMPAT_LEXID} ${COMPAT_VERBFRAME} "${IN}" "${IN2}" "${OUTDIR}"
+jar=target/yaml2wndb-1.0.5-uber.jar
+java -ea -jar "${jar}" ${COMPAT_POINTER} ${COMPAT_LEXID} ${COMPAT_VERBFRAME} "${IN}" "${IN2}" "${OUTDIR}"
