@@ -23,7 +23,6 @@ object Grind {
 	 * @param args command-line arguments
 	 * @return int[0]=flags, int[1]=next arg to process
 	 */
-	@JvmStatic
 	fun flags(args: Array<String>): IntArray {
 		val result = IntArray(2)
 
