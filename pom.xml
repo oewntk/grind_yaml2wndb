@@ -213,6 +213,15 @@
                   <mainClass>org.oewntk.grind.yaml2wndb.Grind</mainClass>
                 </transformer>
               </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF.versions.9.module-info</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>uber</shadedClassifierName>
               <minimizeJar>false</minimizeJar>
