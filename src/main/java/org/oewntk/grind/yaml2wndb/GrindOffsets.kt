@@ -18,49 +18,50 @@ import java.io.IOException
  * @author Bernard Bou
  */
 object GrindOffsets {
-	/**
-	 * Main entry point
-	 *
-	 * @param args command-line arguments
-	 * ```
-	 * [-compat:lexid] [-compat:pointer] yamlDir [outputDir]
-	 * ```
-	 *
-	 * @throws IOException io
-	 */
-	@Throws(IOException::class)
-	@JvmStatic
-	fun main(args: Array<String>) {
-		val flags = flags(args)
-		val iArg = flags[1]
 
-		// Tracing
-		val startTime = start()
+    /**
+     * Main entry point
+     *
+     * @param args command-line arguments
+     * ```
+     * [-compat:lexid] [-compat:pointer] yamlDir [outputDir]
+     * ```
+     *
+     * @throws IOException io
+     */
+    @Throws(IOException::class)
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val flags = flags(args)
+        val iArg = flags[1]
 
-		// Input
-		val inDir = File(args[iArg])
-		Tracing.psInfo.println("[Input] " + inDir.absolutePath)
+        // Tracing
+        val startTime = start()
 
-		// Output
-		val outDir = File(args[iArg + 1])
-		if (!outDir.exists()) {
-			outDir.mkdirs()
-		}
-		Tracing.psInfo.println("[Output] " + outDir.absolutePath)
+        // Input
+        val inDir = File(args[iArg])
+        Tracing.psInfo.println("[Input] " + inDir.absolutePath)
 
-		// Supply model
-		progress("before model is supplied,", startTime)
-		val model = CoreFactory(inDir).get()
-		//Tracing.psInfo.printf("[CoreModel] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info());
-		progress("after model is supplied,", startTime)
+        // Output
+        val outDir = File(args[iArg + 1])
+        if (!outDir.exists()) {
+            outDir.mkdirs()
+        }
+        Tracing.psInfo.println("[Output] " + outDir.absolutePath)
 
-		// Consume model
-		progress("before model is consumed,", startTime)
-		OffsetMapper(outDir, flags[0], Tracing.psInfo).grind(model!!)
-		OffsetSerializer(outDir, flags[0], Tracing.psInfo).grind(model)
-		progress("after model is consumed,", startTime)
+        // Supply model
+        progress("before model is supplied,", startTime)
+        val model = CoreFactory(inDir).get()
+        //Tracing.psInfo.printf("[CoreModel] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info());
+        progress("after model is supplied,", startTime)
 
-		// End
-		progress("total,", startTime)
-	}
+        // Consume model
+        progress("before model is consumed,", startTime)
+        OffsetMapper(outDir, flags[0], Tracing.psInfo).grind(model!!)
+        OffsetSerializer(outDir, flags[0], Tracing.psInfo).grind(model)
+        progress("after model is consumed,", startTime)
+
+        // End
+        progress("total,", startTime)
+    }
 }
