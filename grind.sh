@@ -23,5 +23,5 @@ fi
 mkdir -p "${OUTDIR}"
 echo "DIR:   "${OUTDIR}"" 1>&2;
 
-jar=target/yaml2wndb-1.0.5-uber.jar
+jar=target/yaml2wndb-2.1.0-uber.jar
 java -ea -jar "${jar}" "${IN}" "${IN2}" "${OUTDIR}"
