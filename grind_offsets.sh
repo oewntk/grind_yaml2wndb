@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Copyright (c) 2024. Bernard Bou.
+#
+
 IN="$1"
 if [ -z "$1" ]; then
 	IN=yaml

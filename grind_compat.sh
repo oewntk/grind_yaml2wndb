@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Copyright (c) 2024. Bernard Bou.
+#
+
 COMPAT_POINTER="-compat:pointer"
 COMPAT_LEXID="-compat:lexid"
 COMPAT_LEXID=
