@@ -38,7 +38,7 @@ object Tracing {
         return startTime
     }
 
-    fun progress(message: String?, startTime: Long) {
+    fun progress(message: String, startTime: Long) {
         if (traceTime) {
             val endTime = System.currentTimeMillis()
             psTime.println("[Time]: " + (endTime - startTime) / 1000 + "s")
@@ -60,7 +60,7 @@ object Tracing {
             return formatter
         }
 
-        fun heapInfo(tag: String?, u: Unit): String {
+        fun heapInfo(tag: String, u: Unit): String {
             val max = Runtime.getRuntime().maxMemory()
             val total = Runtime.getRuntime().totalMemory()
             val free = Runtime.getRuntime().freeMemory()
@@ -75,7 +75,7 @@ object Tracing {
             return "$tag used: ${formatter.format(used)}$u maxfree: ${formatter.format(avail)}$u"
         }
 
-        fun memoryInfo(tag: String?, u: Unit): String {
+        fun memoryInfo(tag: String, u: Unit): String {
             var max = Runtime.getRuntime().maxMemory()
             var total = Runtime.getRuntime().totalMemory()
             var free = Runtime.getRuntime().freeMemory()
