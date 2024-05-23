@@ -14,3 +14,4 @@
 #**/*.jar
 /build
 /dependency-reduced-pom.xml
+/oewn-grind-yaml2wndb.jar
