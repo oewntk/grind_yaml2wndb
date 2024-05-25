@@ -7,7 +7,7 @@
 
   <groupId>io.github.oewntk</groupId>
   <artifactId>yaml2wndb</artifactId>
-  <version>2.1.0</version>
+  <version>2.1.1</version>
   <name>yaml_to_wndb</name>
   <description>Read YAML Wordnet model and export it to WNDB files.</description>
   <url>https://github.com/oewntk/grind_yaml2wndb</url>
@@ -23,22 +23,22 @@
     <dependency>
       <groupId>io.github.oewntk</groupId>
       <artifactId>model</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.1</version>
     </dependency>
     <dependency>
       <groupId>io.github.oewntk</groupId>
       <artifactId>fromyaml</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.1</version>
     </dependency>
     <dependency>
       <groupId>io.github.oewntk</groupId>
       <artifactId>towndb</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.1</version>
     </dependency>
     <dependency>
       <groupId>io.github.oewntk</groupId>
       <artifactId>parse_wndb</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -223,7 +223,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
-                    <Build-Number>2.1.0</Build-Number>
+                    <Build-Number>2.1.1</Build-Number>
                   </manifestEntries>
                   <mainClass>org.oewntk.grind.yaml2wndb.Grind</mainClass>
                 </transformer>

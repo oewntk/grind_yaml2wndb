@@ -20,5 +20,5 @@ echo "YAML2: ${IN2}" 1>&2;
 #./grind1.sh yaml yaml2 -sense "breathe%2:29:00::"
 #./grind1.sh yaml yaml2 1740-v
 
-jar=target/yaml2wndb-2.1.0-uber.jar
+jar=target/yaml2wndb-2.1.1-uber.jar
 java -ea -cp "${jar}" org.oewntk.grind.yaml2wndb.Grind1 "${IN}" "${IN2}" $3 $4 $5
