@@ -1,5 +1,5 @@
 /target/
-
+/build/
 /yaml*/
 /yaml*
 /wndb*/
@@ -11,7 +11,8 @@
 /dist_repo
 **/_*/
 **/_*
-#**/*.jar
+/dependency-reduced-pom.xml
+/oewn-grind-yaml2wndb.jar
 /build
 /dependency-reduced-pom.xml
 /oewn-grind-yaml2wndb.jar

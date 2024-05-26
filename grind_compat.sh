@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Copyright (c) 2024. Bernard Bou.
+#
+
 COMPAT_POINTER="-compat:pointer"
 COMPAT_LEXID="-compat:lexid"
 COMPAT_LEXID=
@@ -24,4 +28,5 @@ fi
 mkdir -p "${OUTDIR}"
 echo "DIR:   "${OUTDIR}"" 1>&2;
 
-java -ea -jar oewn-grind-yaml2wndb.jar ${COMPAT_POINTER} ${COMPAT_LEXID} ${COMPAT_VERBFRAME} "${IN}" "${IN2}" "${OUTDIR}"
+jar=target/yaml2wndb-2.1.1-uber.jar
+java -ea -jar "${jar}" ${COMPAT_POINTER} ${COMPAT_LEXID} ${COMPAT_VERBFRAME} "${IN}" "${IN2}" "${OUTDIR}"
