@@ -4,6 +4,7 @@
 /yaml*
 /wndb*/
 /wndb*
+/dict
 /dist/
 /dist*/
 /dist*
@@ -14,5 +15,3 @@
 /dependency-reduced-pom.xml
 /oewn-grind-yaml2wndb.jar
 /build
-/dependency-reduced-pom.xml
-/oewn-grind-yaml2wndb.jar
