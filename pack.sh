@@ -9,7 +9,7 @@
 dbtag=$1
 shift
 if [ -z "${dbtag}" ]; then
-  dbtag=2023
+  dbtag=2024
 fi
 
 # C O L O R S
