@@ -2,7 +2,7 @@
 <img width="256" height="256" src="images/oewntk.png" alt="OEWNTK">
 </p>
 <p align="center">
-<img width="150"src="images/mavencentral.png" alt="MavenCentral">
+<img width="150" src="images/mavencentral.png" alt="MavenCentral">
 </p>
 
 # Open English Wordnet YAML-to-WNDB grinder
@@ -54,7 +54,7 @@ partially grinds the WNDB database and output line at *offset* of *data.{noun|ve
 
 		<groupId>io.github.oewntk</groupId>
 		<artifactId>yaml2wndb</artifactId>
-		<version>2.1.2</version>
+		<version>2.1.3</version>
 
 ## Dependencies
 
