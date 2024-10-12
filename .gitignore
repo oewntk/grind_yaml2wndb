@@ -12,6 +12,8 @@
 /dist_repo
 **/_*/
 **/_*
+**/*.zip
 /dependency-reduced-pom.xml
 /oewn-grind-yaml2wndb.jar
 /build
+/oewn_2024.dict.tar.gz
