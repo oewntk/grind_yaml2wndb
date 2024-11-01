@@ -101,6 +101,7 @@ object Tracing {
             )
         }
 
+        @Suppress("unused")
         enum class Unit(val div: Long) {
             U(1), K(1024 * U.div), M(1024 * K.div), G(1024 * M.div)
         }
