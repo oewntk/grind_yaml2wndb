@@ -17,5 +17,5 @@ fi
 mkdir -p "${OUTDIR}"
 echo "DIR:   "${OUTDIR}"" 1>&2;
 
-jar=target/yaml2wndb-2.1.3-uber.jar
+jar=target/yaml2wndb-2.2.0-uber.jar
 java -ea -cp "${jar}" org.oewntk.grind.yaml2wndb.GrindOffsets "${IN}" "${OUTDIR}"
