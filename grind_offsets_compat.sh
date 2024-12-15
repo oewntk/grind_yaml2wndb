@@ -4,6 +4,8 @@
 # Copyright (c) 2024. Bernard Bou.
 #
 
+set -e
+
 COMPAT_POINTER="-compat:pointer"
 COMPAT_LEXID="-compat:lexid"
 COMPAT_LEXID=

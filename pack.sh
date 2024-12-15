@@ -1,8 +1,9 @@
+#/bin/bash
 #
 # Copyright (c) 2024. Bernard Bou.
 #
 
-#/bin/bash
+set -e
 
 # P A R A M S
 

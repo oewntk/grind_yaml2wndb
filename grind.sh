@@ -4,6 +4,8 @@
 # Copyright (c) 2024. Bernard Bou.
 #
 
+set -e
+
 IN="$1"
 if [ -z "$1" ]; then
 	IN=yaml

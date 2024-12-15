@@ -4,6 +4,8 @@
 # Copyright (c) 2024. Bernard Bou.
 #
 
+set -e
+
 # 1
 IN="$1"
 echo "YAML:  ${IN}" 1>&2;

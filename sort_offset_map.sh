@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$1" ]; then
   >&2 echo "No target dir"
   exit 1
