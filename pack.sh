@@ -8,7 +8,7 @@ set -e
 # P A R A M S
 
 dbtag=$1
-shift
+[ "$#" -eq 0 ] || shift
 if [ -z "${dbtag}" ]; then
   dbtag=2024
 fi
