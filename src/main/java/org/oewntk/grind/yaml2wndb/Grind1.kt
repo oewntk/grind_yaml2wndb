@@ -96,7 +96,7 @@ class Grind1(
             var resolver: Resolver? = null
             if (isSense) {
                 id = args[iArg + 2]
-                resolver = { model: CoreModel, senseId: String -> model.sensesById!![senseId]!!.synsetId }
+                resolver = { model: CoreModel, senseId: String -> model.senseResolver(senseId).synsetId }
             } else if (isOffset) {
                 val pos = args[iArg + 2][0]
                 val offset31 = args[iArg + 3].toLong()
