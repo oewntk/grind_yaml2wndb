@@ -3,6 +3,7 @@
  */
 package org.oewntk.grind.yaml2wndb
 
+import com.sun.tools.javac.tree.TreeInfo.flags
 import org.oewntk.grind.yaml2wndb.Grind.flags
 import org.oewntk.model.CoreModel
 import org.oewntk.parse.DataParser1
@@ -23,7 +24,7 @@ typealias Resolver = (CoreModel, String) -> String?
  * @see "https://wordnet.princeton.edu/documentation/wndb5wn"
  */
 class Grind1(
-    private val flags: Int,
+    val flags: Int,
     private val resolver: Resolver?,
 ) {
 

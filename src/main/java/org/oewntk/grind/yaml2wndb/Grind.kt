@@ -28,13 +28,15 @@ object Grind {
 
         var i = 0
         while (i < args.size) {
-            if ("-traceTime" == args[i]) { // if left and is "-traceTime"
+            if ("-verbose" == args[i]) {
+                Tracing.verbose = true
+            } else if ("-traceTime" == args[i]) { // if left and is "-traceTime"
                 Tracing.traceTime = true
             } else if ("-traceHeap" == args[i]) { // if left and is "-traceHeap"
                 Tracing.traceHeap = true
             } else if ("-compat:pointer" == args[i]) { // if left and is "-compat:pointer"
                 result[0] = result[0] or Flags.POINTER_COMPAT
-            } else if ("-compat:lexid" == args[i])  {// if left and is "-compat:lexid"
+            } else if ("-compat:lexid" == args[i]) {// if left and is "-compat:lexid"
                 result[0] = result[0] or Flags.LEXID_COMPAT
             } else if ("-compat:verbframe" == args[i]) { // if left and is "-compat:verbframe"
                 result[0] = result[0] or Flags.VERBFRAME_COMPAT
@@ -82,13 +84,13 @@ object Grind {
 
         // Supply model
         Tracing.progress("before model is supplied,", startTime)
-        val model = Factory(inDir, inDir2).get()
+        val model = Factory(inDir, inDir2, verbose = Tracing.verbose).get()
         //Tracing.psInfo.printf("[Model] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info())
         Tracing.progress("after model is supplied,", startTime)
 
         // Consume model
         Tracing.progress("before model is consumed,", startTime)
-        ModelConsumer(outDir, flags[0]).grind(model!!)
+        ModelConsumer(outDir, flags[0], verbose = Tracing.verbose).grind(model!!)
         Tracing.progress("after model is consumed,", startTime)
 
         // End
