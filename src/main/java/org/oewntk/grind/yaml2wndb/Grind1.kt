@@ -36,7 +36,7 @@ class Grind1(
     fun grind(source: File, id: String) {
 
         // Model
-        val model = CoreFactory(source).get()!!
+        val model = CoreFactory(source, verbose = Tracing.verbose).get()!!
 
         // SynsetId
         val synsetId = if (resolver != null) resolver.invoke(model, id) ?: id else id

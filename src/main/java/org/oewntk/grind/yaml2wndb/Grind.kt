@@ -28,20 +28,15 @@ object Grind {
 
         var i = 0
         while (i < args.size) {
-            if ("-traceTime" == args[i]) // if left and is "-traceTime"
-            {
+            if ("-traceTime" == args[i]) { // if left and is "-traceTime"
                 Tracing.traceTime = true
-            } else if ("-traceHeap" == args[i]) // if left and is "-traceHeap"
-            {
+            } else if ("-traceHeap" == args[i]) { // if left and is "-traceHeap"
                 Tracing.traceHeap = true
-            } else if ("-compat:pointer" == args[i]) // if left and is "-compat:pointer"
-            {
+            } else if ("-compat:pointer" == args[i]) { // if left and is "-compat:pointer"
                 result[0] = result[0] or Flags.POINTER_COMPAT
-            } else if ("-compat:lexid" == args[i]) // if left and is "-compat:lexid"
-            {
+            } else if ("-compat:lexid" == args[i])  {// if left and is "-compat:lexid"
                 result[0] = result[0] or Flags.LEXID_COMPAT
-            } else if ("-compat:verbframe" == args[i]) // if left and is "-compat:verbframe"
-            {
+            } else if ("-compat:verbframe" == args[i]) { // if left and is "-compat:verbframe"
                 result[0] = result[0] or Flags.VERBFRAME_COMPAT
             } else {
                 break

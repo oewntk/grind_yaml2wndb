@@ -51,7 +51,7 @@ object GrindOffsets {
 
         // Supply model
         progress("before model is supplied,", startTime)
-        val model = CoreFactory(inDir).get()
+        val model = CoreFactory(inDir, verbose = Tracing.verbose).get()
         //Tracing.psInfo.printf("[CoreModel] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info());
         progress("after model is supplied,", startTime)
 
