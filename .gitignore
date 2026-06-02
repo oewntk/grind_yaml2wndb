@@ -4,16 +4,19 @@
 /yaml*
 /wndb*/
 /wndb*
+
 /dict
 /dist/
 /dist*/
 /dist*
 /dist_repo/
 /dist_repo
+
 **/_*/
 **/_*
 **/*.jar
 **/*.zip
+
 /dependency-reduced-pom.xml
-/build
+
 
