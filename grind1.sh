@@ -22,7 +22,7 @@ echo "YAML2: ${IN2}" 1>&2;
 #./grind1.sh yaml yaml2 -sense "breathe%2:29:00::"
 #./grind1.sh yaml yaml2 1740-v
 
-jar=yaml2wndb-2.4.0-uber.jar
+jar=yaml2wndb-3.0.1-uber.jar
 if [ ! -e "${jar}" ]; then
   if [ ! -e "target/${jar}" ]; then
     echo "Non existing uber jar" >&2

@@ -30,7 +30,7 @@ fi
 mkdir -p "${OUTDIR}"
 echo "DIR:   "${OUTDIR}"" 1>&2;
 
-jar=yaml2wndb-2.4.0-uber.jar
+jar=yaml2wndb-3.0.1-uber.jar
 if [ ! -e "${jar}" ]; then
   if [ ! -e "target/${jar}" ]; then
     echo "Non existing uber jar" >&2
