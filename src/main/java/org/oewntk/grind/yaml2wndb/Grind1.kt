@@ -3,7 +3,6 @@
  */
 package org.oewntk.grind.yaml2wndb
 
-import com.sun.tools.javac.tree.TreeInfo.flags
 import org.oewntk.grind.yaml2wndb.Grind.flags
 import org.oewntk.model.CoreModel
 import org.oewntk.parse.DataParser1
