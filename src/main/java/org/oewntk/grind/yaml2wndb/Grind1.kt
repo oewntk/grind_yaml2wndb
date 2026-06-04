@@ -86,7 +86,6 @@ class Grind1(
         @JvmStatic
         fun main(args: Array<String>) {
             val parser = ArgParser("yaml2wndb")
-
             // Options (start with - or --)
             // @formatter:off
             val in1 by parser.argument(            ArgType.String,                                                    description = "Input dir or file")
