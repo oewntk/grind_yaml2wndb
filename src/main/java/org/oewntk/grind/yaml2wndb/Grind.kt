@@ -3,6 +3,9 @@
  */
 package org.oewntk.grind.yaml2wndb
 
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.default
 import org.oewntk.wndb.out.Flags
 import org.oewntk.wndb.out.ModelConsumer
 import org.oewntk.yaml.`in`.Factory
@@ -18,34 +21,18 @@ import java.io.IOException
 object Grind {
 
     /**
-     * Argument switches processing
+     * Argument switches merging
      *
-     * @param args command-line arguments
-     * @return int[0]=flags, int[1]=next arg to process
+     * @return flags
      */
-    fun flags(args: Array<String>): IntArray {
-        val result = IntArray(2)
-
-        var i = 0
-        while (i < args.size) {
-            if ("-verbose" == args[i]) {
-                Tracing.verbose = true
-            } else if ("-traceTime" == args[i]) { // if left and is "-traceTime"
-                Tracing.traceTime = true
-            } else if ("-traceHeap" == args[i]) { // if left and is "-traceHeap"
-                Tracing.traceHeap = true
-            } else if ("-compat:pointer" == args[i]) { // if left and is "-compat:pointer"
-                result[0] = result[0] or Flags.POINTER_COMPAT
-            } else if ("-compat:lexid" == args[i]) {// if left and is "-compat:lexid"
-                result[0] = result[0] or Flags.LEXID_COMPAT
-            } else if ("-compat:verbframe" == args[i]) { // if left and is "-compat:verbframe"
-                result[0] = result[0] or Flags.VERBFRAME_COMPAT
-            } else {
-                break
-            }
-            i++
-        }
-        result[1] = i
+    fun flags(compatPointer: Boolean, compatLexId: Boolean, compatVFrame: Boolean): Int {
+        var result = 0
+        if (compatPointer)
+            result = result or Flags.POINTER_COMPAT
+        if (compatLexId)
+            result = result or Flags.LEXID_COMPAT
+        if (compatVFrame)
+            result = result or Flags.VERBFRAME_COMPAT
         return result
     }
 
@@ -61,36 +48,56 @@ object Grind {
     @Throws(IOException::class)
     @JvmStatic
     fun main(args: Array<String>) {
-        val flags = flags(args)
-        val iArg = flags[1]
+        val parser = ArgParser("yaml2wndb")
+
+        // Options (start with - or --)
+        // @formatter:off
+        val in1 by parser.argument(            ArgType.String,                                                    description = "Input dir or file")
+        val in2 by parser.argument(            ArgType.String,                                                    description = "Extra input dir or file")
+        val out by parser.argument(            ArgType.String,                                                    description = "Output dir or file")
+        val verbose by parser.option(          ArgType.Boolean,  shortName = "v",  fullName = "verbose",          description = "Verbose output")           .default(false)
+
+        val wndCompatPointer by parser.option( ArgType.Boolean,  shortName = "wp", fullName = "compat:pointer",   description = "WNDB pointer compat")      .default(false)
+        val wndCompatLexId by parser.option(   ArgType.Boolean,  shortName = "wl", fullName = "compat:lexid",     description = "WNDB lexid compat")        .default(false)
+        val wndCompatVFrames by parser.option( ArgType.Boolean,  shortName = "wv", fullName = "compat:verbframe", description = "WNDB vframe compat")       .default(false)
+
+        val traceTime by parser.option(        ArgType.Boolean,  shortName = "tt", fullName = "trace:time",       description = "trace time")               .default(false)
+        val traceHeap by parser.option(        ArgType.Boolean,  shortName = "th", fullName = "trace:heap",       description = "trace heap")               .default(false)
+        // @formatter:on
+        parser.parse(args)
 
         // Tracing
+        Tracing.traceTime = traceTime
+        Tracing.traceHeap = traceHeap
+
         val startTime = Tracing.start()
 
         // Input
-        val inDir = File(args[iArg])
+        val inDir = File(in1)
         Tracing.psInfo.println("[Input] " + inDir.absolutePath)
 
         // Input2
-        val inDir2 = File(args[iArg + 1])
+        val inDir2 = File(in2)
         Tracing.psInfo.println("[Input2] " + inDir2.absolutePath)
 
         // Output
-        val outDir = File(args[iArg + 2])
+        val outDir = File(out)
         if (!outDir.exists()) {
             outDir.mkdirs()
         }
         Tracing.psInfo.println("[Output] " + outDir.absolutePath)
 
+        // Flags
+        val wndbFlags = flags(wndCompatPointer, wndCompatLexId, wndCompatVFrames)
+
         // Supply model
         Tracing.progress("before model is supplied,", startTime)
-        val model = Factory(inDir, inDir2, verbose = Tracing.verbose).get()
-        //Tracing.psInfo.printf("[Model] %s%n%s%n%n", Arrays.toString(model.getSources()), model.info())
+        val model = Factory(inDir, inDir2, verbose = verbose).get()
         Tracing.progress("after model is supplied,", startTime)
 
         // Consume model
         Tracing.progress("before model is consumed,", startTime)
-        ModelConsumer(outDir, flags[0], verbose = Tracing.verbose).grind(model!!)
+        ModelConsumer(outDir, flags = wndbFlags, verbose = verbose).grind(model!!)
         Tracing.progress("after model is consumed,", startTime)
 
         // End

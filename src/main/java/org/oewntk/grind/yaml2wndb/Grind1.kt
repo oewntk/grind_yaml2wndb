@@ -3,6 +3,9 @@
  */
 package org.oewntk.grind.yaml2wndb
 
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.default
 import org.oewntk.grind.yaml2wndb.Grind.flags
 import org.oewntk.model.CoreModel
 import org.oewntk.parse.DataParser1
@@ -25,6 +28,7 @@ typealias Resolver = (CoreModel, String) -> String?
 class Grind1(
     val flags: Int,
     private val resolver: Resolver?,
+    private val verbose: Boolean = false,
 ) {
 
     /**
@@ -36,7 +40,7 @@ class Grind1(
     fun grind(source: File, id: String) {
 
         // Model
-        val model = CoreFactory(source, verbose = Tracing.verbose).get()!!
+        val model = CoreFactory(source, verbose = verbose).get()!!
 
         // SynsetId
         val synsetId = if (resolver != null) resolver.invoke(model, id) ?: id else id
@@ -81,30 +85,52 @@ class Grind1(
          */
         @JvmStatic
         fun main(args: Array<String>) {
-            val flags = flags(args)
-            val iArg = flags[1]
+            val parser = ArgParser("yaml2wndb")
+
+            // Options (start with - or --)
+            // @formatter:off
+            val in1 by parser.argument(            ArgType.String,                                                    description = "Input dir or file")
+
+            val synset by parser.option(           ArgType.String,   shortName = "y",  fullName = "synset",           description = "Synset id")
+            val sense by parser.option(            ArgType.String,   shortName = "s",  fullName = "sense",            description = "Sense id")
+            val offset by parser.option(           ArgType.String,   shortName = "o",  fullName = "offset",           description = "Offset")
+            val verbose by parser.option(          ArgType.Boolean,  shortName = "v",  fullName = "verbose",          description = "Verbose output")           .default(false)
+
+            val wndCompatPointer by parser.option( ArgType.Boolean,  shortName = "wp", fullName = "compat:pointer",   description = "WNDB pointer compat")      .default(false)
+            val wndCompatLexId by parser.option(   ArgType.Boolean,  shortName = "wl", fullName = "compat:lexid",     description = "WNDB lexid compat")        .default(false)
+            val wndCompatVFrames by parser.option( ArgType.Boolean,  shortName = "wv", fullName = "compat:verbframe", description = "WNDB vframe compat")       .default(false)
+
+            val traceTime by parser.option(        ArgType.Boolean,  shortName = "tt", fullName = "trace:time",       description = "trace time")               .default(false)
+            val traceHeap by parser.option(        ArgType.Boolean,  shortName = "th", fullName = "trace:heap",       description = "trace heap")               .default(false)
+            // @formatter:on
+            parser.parse(args)
+
+            // Tracing
+            Tracing.traceTime = traceTime
+            Tracing.traceHeap = traceHeap
 
             // Input
-            val source = File(args[iArg])
+            val source = File(in1)
 
             // SynsetId, SenseId, w31 offset
-            val extraArg1 = args[iArg + 1]
-            val isOffset = extraArg1 == "-offset"
-            val isSense = extraArg1 == "-sense"
-
-            val id: String
-            var resolver: Resolver? = null
-            if (isSense) {
-                id = args[iArg + 2]
-                resolver = { model: CoreModel, senseId: String -> model.senseResolver(senseId).synsetId }
-            } else if (isOffset) {
-                val pos = args[iArg + 2][0]
-                val offset31 = args[iArg + 3].toLong()
-                id = String.format("%08d-%c", offset31, pos)
+            val (id: String, resolver: Resolver?) = if (sense != null) {
+                val resolver = { model: CoreModel, senseId: String -> model.senseResolver(senseId).synsetId }
+                sense!! to resolver
+            } else if (offset != null) {
+                val pos = offset!![0]
+                val offset31 = offset!!.drop(1).toLong()
+                val synsetId = String.format("%08d-%c", offset31, pos)
+                synsetId to null
+            } else if (synset != null) {
+                synset!! to null
             } else {
-                id = extraArg1
+                throw IllegalArgumentException()
             }
-            Grind1(flags[0], resolver).grind(source, id)
+
+            // Flags
+            val wndbFlags = flags(wndCompatPointer, wndCompatLexId, wndCompatVFrames)
+
+            Grind1(wndbFlags, resolver, verbose = verbose).grind(source, id)
         }
     }
 }
