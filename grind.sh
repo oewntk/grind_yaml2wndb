@@ -37,4 +37,5 @@ if [ ! -e "${jar}" ]; then
   echo "Non existing uber jar" >&2
   exit 2
   fi
+
 java -ea -jar "${jar}" "${IN}" "${IN2}" "${OUTDIR}"
