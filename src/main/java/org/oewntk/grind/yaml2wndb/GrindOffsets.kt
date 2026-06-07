@@ -73,17 +73,17 @@ object GrindOffsets {
         val wndbFlags = flags(wndCompatPointer, wndCompatLexId, wndCompatVFrames)
 
         // Supply model
-        progress("before model is supplied,", startTime)
+        progress("before model is supplied", startTime)
         val model = CoreFactory(inDir, verbose = verbose).get()
-        progress("after model is supplied,", startTime)
+        progress("after model is supplied", startTime)
 
         // Consume model
-        progress("before model is consumed,", startTime)
+        progress("before model is consumed", startTime)
         OffsetMapper(outDir, wndbFlags, Tracing.psInfo).grind(model!!)
         OffsetSerializer(outDir, wndbFlags, Tracing.psInfo).grind(model)
-        progress("after model is consumed,", startTime)
+        progress("after model is consumed", startTime)
 
         // End
-        progress("total,", startTime)
+        progress("end", startTime)
     }
 }

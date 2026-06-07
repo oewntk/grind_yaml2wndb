@@ -38,15 +38,17 @@ object Tracing {
         return startTime
     }
 
-    fun progress(message: String, startTime: Long) {
+    fun progress(message: String, startTime: Long, verbose: Boolean) {
+        if (verbose)
+            psInfo.println("[Progress] $message")
+        // time
         if (traceTime) {
             val endTime = System.currentTimeMillis()
-            psTime.println("[Time]: " + (endTime - startTime) / 1000 + "s")
+            psTime.println("[Time] " + (endTime - startTime) / 1000 + "s")
         }
-
         // heap state
         if (traceHeap) {
-            psHeap.println("[Heap]: " + Memory.heapInfo(message, Memory.Unit.M))
+            psHeap.println("[Heap] " + Memory.heapInfo(message, Memory.Unit.M))
         }
     }
 

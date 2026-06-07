@@ -6,6 +6,7 @@ package org.oewntk.grind.yaml2wndb
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
+import org.oewntk.grind.yaml2wndb.Tracing.progress
 import org.oewntk.wndb.out.Flags
 import org.oewntk.wndb.out.ModelConsumer
 import org.oewntk.yaml.`in`.Factory
@@ -90,16 +91,16 @@ object Grind {
         val wndbFlags = flags(wndCompatPointer, wndCompatLexId, wndCompatVFrames)
 
         // Supply model
-        Tracing.progress("before model is supplied,", startTime)
+        progress("before model is supplied", startTime)
         val model = Factory(inDir, inDir2, verbose = verbose).get()
-        Tracing.progress("after model is supplied,", startTime)
+        progress("after model is supplied", startTime)
 
         // Consume model
-        Tracing.progress("before model is consumed,", startTime)
+        progress("before model is consumed", startTime)
         ModelConsumer(outDir, flags = wndbFlags, verbose = verbose).grind(model!!)
-        Tracing.progress("after model is consumed,", startTime)
+        progress("after model is consumed", startTime)
 
         // End
-        Tracing.progress("total,", startTime)
+        progress("end", startTime)
     }
 }
