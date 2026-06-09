@@ -38,7 +38,7 @@ object Tracing {
         return startTime
     }
 
-    fun progress(message: String, startTime: Long, verbose: Boolean) {
+    fun progress(message: String, startTime: Long, verbose: Boolean = true) {
         if (verbose)
             psInfo.println("[Progress] $message")
         // time
