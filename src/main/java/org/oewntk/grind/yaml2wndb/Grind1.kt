@@ -28,6 +28,7 @@ typealias Resolver = (CoreModel, String) -> String?
 class Grind1(
     val flags: Int,
     private val resolver: Resolver?,
+    private val throws: Boolean = true,
     private val verbose: Boolean = false,
 ) {
 
@@ -40,7 +41,7 @@ class Grind1(
     fun grind(source: File, id: String) {
 
         // Model
-        val model = CoreFactory(source, verbose = verbose).get()!!
+        val model = CoreFactory(source, throws = throws, verbose = verbose).get()!!
 
         // SynsetId
         val synsetId = if (resolver != null) resolver.invoke(model, id) ?: id else id
@@ -93,6 +94,7 @@ class Grind1(
             val synset by parser.option(           ArgType.String,   shortName = "y",  fullName = "synset",           description = "Synset id")
             val sense by parser.option(            ArgType.String,   shortName = "s",  fullName = "sense",            description = "Sense id")
             val offset by parser.option(           ArgType.String,   shortName = "o",  fullName = "offset",           description = "Offset")
+            val doNotThrow by parser.option(       ArgType.Boolean,  shortName = "nt", fullName = "no_throw",         description = "Do not throw")             .default(false)
             val verbose by parser.option(          ArgType.Boolean,  shortName = "v",  fullName = "verbose",          description = "Verbose output")           .default(false)
 
             val wndCompatPointer by parser.option( ArgType.Boolean,  shortName = "wp", fullName = "compat:pointer",   description = "WNDB pointer compat")      .default(false)
@@ -129,7 +131,7 @@ class Grind1(
             // Flags
             val wndbFlags = flags(wndCompatPointer, wndCompatLexId, wndCompatVFrames)
 
-            Grind1(wndbFlags, resolver, verbose = verbose).grind(source, id)
+            Grind1(wndbFlags, resolver, throws = !doNotThrow, verbose = verbose).grind(source, id)
         }
     }
 }
