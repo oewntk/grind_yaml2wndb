@@ -8,7 +8,7 @@ set -e
 
 # 1
 IN="$1"
-shift
+[ "$#" -eq 0 ] || shift
 echo "YAML:  ${IN}" 1>&2;
 
 # -sense		SENSEID
