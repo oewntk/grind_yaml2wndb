@@ -92,8 +92,7 @@ object Tracing {
             avail /= u.div
 
             val formatter = formatter()
-            return String.format(
-                "%s max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s",
+            return "%s max=%15s%s total=%10s%s used=%15s%s free=%15s%s avail=%15s%s".format(
                 tag,
                 formatter.format(max), u,
                 formatter.format(total), u,

@@ -120,7 +120,7 @@ class Grind1(
             } else if (offset != null) {
                 val pos = offset!![0]
                 val offset31 = offset!!.drop(1).toLong()
-                val synsetId = String.format("%08d-%c", offset31, pos)
+                val synsetId = "%08d-%c".format(offset31, pos)
                 synsetId to null
             } else if (synset != null) {
                 synset!! to null
