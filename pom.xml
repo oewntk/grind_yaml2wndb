@@ -7,7 +7,7 @@
 
     <groupId>io.github.oewntk</groupId>
     <artifactId>yaml2wndb</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.1-SNAPSHOT</version>
     <name>yaml_to_wndb</name>
     <description>Read YAML Wordnet model and export it to WNDB files.</description>
     <url>https://github.com/oewntk/grind_yaml2wndb</url>
@@ -23,22 +23,22 @@
         <dependency>
             <groupId>io.github.oewntk</groupId>
             <artifactId>model</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.github.oewntk</groupId>
             <artifactId>fromyaml</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.github.oewntk</groupId>
             <artifactId>towndb</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.github.oewntk</groupId>
             <artifactId>parse_wndb</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
