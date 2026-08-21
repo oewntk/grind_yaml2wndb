@@ -19,7 +19,7 @@ echo "YAML:  ${IN}" 1>&2;
 #./grind1.sh yaml --sense "breathe%2:29:00::"
 #./grind1.sh yaml --sense 00001740-v
 
-jar=yaml2wndb-3.0.1-uber.jar
+jar=yaml2wndb-3.0.1-SNAPSHOT-uber.jar
 if [ ! -e "${jar}" ]; then
   if [ ! -e "target/${jar}" ]; then
     echo "Non existing uber jar" >&2
