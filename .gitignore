@@ -5,6 +5,8 @@
 /yaml*
 /wndb*/
 /wndb*
+/pr*/
+/pr*
 
 /dict
 /dist/
