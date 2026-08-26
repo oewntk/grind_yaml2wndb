@@ -7,6 +7,7 @@ import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import org.oewntk.grind.yaml2wndb.Grind.flags
+import org.oewntk.model.*
 import org.oewntk.model.CoreModel
 import org.oewntk.parse.DataParser1
 import org.oewntk.pojos.ParsePojoException
@@ -115,7 +116,7 @@ class Grind1(
 
             // SynsetId, SenseId, w31 offset
             val (id: String, resolver: Resolver?) = if (sense != null) {
-                val resolver = { model: CoreModel, senseId: String -> model.senseResolver(senseId).synsetId }
+                val resolver = { model: CoreModel, senseId: String -> model.senseResolver(SenseKey(senseId)).synsetId.id }
                 sense!! to resolver
             } else if (offset != null) {
                 val pos = offset!![0]
